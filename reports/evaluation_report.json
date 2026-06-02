@@ -1,0 +1,53 @@
+{
+  "note": "当前为训练骨架报告，真实 BERT 训练接入后替换为 accuracy、macro F1 和 classification_report。",
+  "dev": {
+    "file": "D:\\xuweiqun\\py_project\\K12-learn\\data\\processed\\dev.txt",
+    "count": 3,
+    "accuracy": 1.0,
+    "details": [
+      {
+        "text": "孟德尔用豌豆杂交实验发现显隐性关系，并总结遗传定律。",
+        "label": 0,
+        "predicted_label": 0,
+        "confidence": 0.98
+      },
+      {
+        "text": "减数分裂和受精作用共同维持生物前后代染色体数目的稳定。",
+        "label": 1,
+        "predicted_label": 1,
+        "confidence": 0.9526
+      },
+      {
+        "text": "抗维生素D佝偻病属于伴性遗传分析中的常见案例。",
+        "label": 2,
+        "predicted_label": 2,
+        "confidence": 0.9526
+      }
+    ]
+  },
+  "test": {
+    "file": "D:\\xuweiqun\\py_project\\K12-learn\\data\\processed\\test.txt",
+    "count": 3,
+    "accuracy": 1.0,
+    "details": [
+      {
+        "text": "肺炎链球菌转化实验和噬菌体侵染细菌实验都与遗传物质探索有关。",
+        "label": 3,
+        "predicted_label": 3,
+        "confidence": 0.98
+      },
+      {
+        "text": "DNA复制过程需要遵循碱基互补配对原则。",
+        "label": 4,
+        "predicted_label": 4,
+        "confidence": 0.98
+      },
+      {
+        "text": "翻译过程中mRNA上的密码子与氨基酸对应。",
+        "label": 5,
+        "predicted_label": 5,
+        "confidence": 0.98
+      }
+    ]
+  }
+}
