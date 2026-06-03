@@ -35,6 +35,17 @@ def _int_env(name: str, default: int) -> int:
     return int(value)
 
 
+def _bert_pretrained_path() -> Path:
+    configured = os.getenv("BERT_PRETRAINED_PATH")
+    if configured:
+        configured_path = Path(configured)
+        if not configured_path.is_absolute():
+            configured_path = PROJECT_DIR / configured_path
+        return configured_path
+
+    return PROJECT_DIR / "backend/models/bert-base-chinese"
+
+
 @dataclass(frozen=True)
 class Settings:
     flask_host: str
@@ -72,20 +83,18 @@ def get_settings() -> Settings:
         flask_port=_int_env("FLASK_PORT", 8000),
         flask_debug=_bool_env("FLASK_DEBUG", True),
         cors_origins=[item.strip() for item in cors.split(",") if item.strip()],
-        db_host=os.getenv("DB_HOST", "192.168.218.150"),
+        db_host=os.getenv("DB_HOST", "127.0.0.1"),
         db_port=_int_env("DB_PORT", 3306),
         db_user=os.getenv("DB_USER", "root"),
-        db_password=os.getenv("DB_PASSWORD", "root"),
-        db_name=os.getenv("DB_NAME", "doc_pro"),
+        db_password=os.getenv("DB_PASSWORD", "123456"),
+        db_name=os.getenv("DB_NAME", "k12-learn"),
         redis_host=os.getenv("REDIS_HOST", "127.0.0.1"),
         redis_port=_int_env("REDIS_PORT", 6379),
         redis_password=os.getenv("REDIS_PASSWORD") or None,
         redis_db=_int_env("REDIS_DB", 0),
         redis_ttl_seconds=_int_env("REDIS_TTL_SECONDS", 86400),
-        model_path=PROJECT_DIR / os.getenv("MODEL_PATH", "backend/models/knowledge_bert.pt"),
-        bert_pretrained_path=PROJECT_DIR / os.getenv(
-            "BERT_PRETRAINED_PATH", "backend/models/bert-base-chinese"
-        ),
+        model_path=PROJECT_DIR / os.getenv("MODEL_PATH", "backend/models/knowledge_bert"),
+        bert_pretrained_path=_bert_pretrained_path(),
         class_path=PROJECT_DIR / os.getenv("CLASS_PATH", "data/processed/class.txt"),
         data_dir=PROJECT_DIR / os.getenv("DATA_DIR", "data/processed"),
     )

@@ -18,12 +18,20 @@ export function predictKnowledgePoint(text) {
   return unwrap(client.post('/predict/knowledge-point', { text }))
 }
 
+export function classifyAndRecommendWrongQuestion(text) {
+  return unwrap(client.post('/wrong-questions/classify-and-recommend', { text }))
+}
+
 export function fetchKnowledgePoints() {
   return unwrap(client.get('/knowledge-points'))
 }
 
 export function fetchRecentPredictions(limit = 10) {
   return unwrap(client.get('/predictions/recent', { params: { limit } }))
+}
+
+export function fetchRecentWrongQuestions(limit = 10) {
+  return unwrap(client.get('/wrong-questions/recent', { params: { limit } }))
 }
 
 export function fetchOverviewStats() {

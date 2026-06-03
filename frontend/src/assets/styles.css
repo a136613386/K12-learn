@@ -13,7 +13,8 @@ body {
 }
 
 button,
-textarea {
+textarea,
+summary {
   font: inherit;
 }
 
@@ -151,6 +152,11 @@ textarea {
   padding: 6px 10px;
 }
 
+.badge.muted {
+  background: #f2f4f7;
+  color: #475467;
+}
+
 .metric-grid {
   display: grid;
   gap: 12px;
@@ -182,6 +188,82 @@ textarea {
   border-left: 4px solid #1f6feb;
   margin: 14px 0 0;
   padding: 10px 12px;
+}
+
+.hint {
+  background: #fff8e5;
+  border: 1px solid #f6d36b;
+  border-radius: 6px;
+  color: #7a4d00;
+  margin: 12px 0 0;
+  padding: 10px 12px;
+}
+
+.practice-list {
+  display: grid;
+  gap: 14px;
+  list-style-position: inside;
+  margin: 0;
+  padding: 0;
+}
+
+.practice-list li {
+  background: #f8fbfe;
+  border: 1px solid #dce6ef;
+  border-radius: 8px;
+  padding: 14px;
+}
+
+.practice-list p {
+  line-height: 1.7;
+  margin-bottom: 10px;
+}
+
+.practice-list pre {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  line-height: 1.6;
+  margin: 0 0 10px;
+  padding: 10px;
+  white-space: pre-wrap;
+}
+
+.question-title {
+  align-items: center;
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.question-title span {
+  color: #64748b;
+  font-size: 13px;
+}
+
+details {
+  background: #fff;
+  border-radius: 6px;
+  padding: 10px 12px;
+}
+
+summary {
+  color: #1f6feb;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.answer {
+  color: #17633a;
+  font-size: 18px;
+  font-weight: 800;
+  margin-top: 8px;
+}
+
+.analysis {
+  color: #526b84;
+  margin: 8px 0 0;
 }
 
 .recent-list,

@@ -26,10 +26,10 @@ def main() -> int:
     health = get_json("/health")
     print("health:", json.dumps(health, ensure_ascii=False))
     result = post_json(
-        "/predict/knowledge-point",
+        "/wrong-questions/classify-and-recommend",
         {"text": "豌豆杂交实验中F2出现3:1分离比，说明显隐性和基因型关系。"},
     )
-    print("predict:", json.dumps(result, ensure_ascii=False))
+    print("wrong-question:", json.dumps(result, ensure_ascii=False))
     return 0
 
 

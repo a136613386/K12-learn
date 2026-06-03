@@ -34,6 +34,7 @@ class PredictionService:
             "knowledge_point_id": prediction.label_id,
             "knowledge_point_name": knowledge_point.get("name", "未知知识点"),
             "confidence": prediction.confidence,
+            "model_status": prediction.model_status,
             "elapsed_ms": elapsed_ms,
             "cache_hit": False,
             "importance": knowledge_point.get("importance"),

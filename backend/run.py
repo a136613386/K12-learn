@@ -11,4 +11,5 @@ if __name__ == "__main__":
         host=settings.flask_host,
         port=settings.flask_port,
         debug=settings.flask_debug,
+        use_reloader=False,
     )

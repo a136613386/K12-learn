@@ -5,7 +5,8 @@ import sys
 PROJECT_DIR = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(PROJECT_DIR / "backend"))
 
-from app.db import db_cursor  # noqa: E402
+from app.config import get_settings  # noqa: E402
+from app.db import db_cursor, get_server_connection  # noqa: E402
 
 
 def split_sql(sql: str) -> list[str]:
@@ -25,6 +26,14 @@ def split_sql(sql: str) -> list[str]:
 
 
 def main() -> int:
+    settings = get_settings()
+    with get_server_connection() as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(
+                f"CREATE DATABASE IF NOT EXISTS `{settings.db_name}` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci"
+            )
+        connection.commit()
+
     sql_path = PROJECT_DIR / "database" / "init.sql"
     sql_text = sql_path.read_text(encoding="utf-8")
 

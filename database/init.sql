@@ -16,13 +16,32 @@ CREATE TABLE IF NOT EXISTS questions (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     stem TEXT NOT NULL,
     options TEXT NULL,
-    answer VARCHAR(255) NULL,
+    answer VARCHAR(255) NOT NULL,
+    analysis TEXT NULL,
     label_id INT NULL,
+    difficulty TINYINT NULL,
     source VARCHAR(255) NULL,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     INDEX idx_questions_label_id (label_id),
     CONSTRAINT fk_questions_label_id FOREIGN KEY (label_id) REFERENCES knowledge_points(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS wrong_question_logs (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    text_hash VARCHAR(64) NOT NULL,
+    input_text TEXT NOT NULL,
+    predicted_label_id INT NOT NULL,
+    confidence DECIMAL(8, 6) NOT NULL,
+    recommended_question_ids TEXT NULL,
+    recommendation_count INT NOT NULL DEFAULT 0,
+    elapsed_ms DECIMAL(10, 2) NOT NULL,
+    cache_hit TINYINT NOT NULL DEFAULT 0,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_wrong_question_logs_text_hash (text_hash),
+    INDEX idx_wrong_question_logs_created_at (created_at),
+    INDEX idx_wrong_question_logs_predicted_label_id (predicted_label_id),
+    CONSTRAINT fk_wrong_question_logs_label_id FOREIGN KEY (predicted_label_id) REFERENCES knowledge_points(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS prediction_logs (
@@ -64,3 +83,5 @@ ON DUPLICATE KEY UPDATE
     difficulty = VALUES(difficulty),
     core_requirement = VALUES(core_requirement),
     sort_order = VALUES(sort_order);
+
+-- ???? backend/scripts/seed_question_bank.py ????????????????

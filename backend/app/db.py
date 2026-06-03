@@ -31,6 +31,25 @@ def get_connection():
     )
 
 
+def get_server_connection():
+    if pymysql is None:
+        raise RuntimeError("PyMySQL is not installed")
+
+    settings = get_settings()
+    return pymysql.connect(
+        host=settings.db_host,
+        port=settings.db_port,
+        user=settings.db_user,
+        password=settings.db_password,
+        charset="utf8mb4",
+        cursorclass=DictCursor,
+        autocommit=False,
+        connect_timeout=2,
+        read_timeout=2,
+        write_timeout=2,
+    )
+
+
 @contextmanager
 def db_cursor() -> Iterator:
     connection = get_connection()
