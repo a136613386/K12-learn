@@ -26,9 +26,7 @@ class BioPredictor:
         self.id_to_name = label_data.get("id_to_name", {})
         self.name_to_id = label_data.get("name_to_id", {})
 
-    def predict(self, question_text: str, threshold=None):
-        threshold = Config.DEFAULT_THRESHOLD if threshold is None else threshold
-
+    def predict(self, question_text: str):
         clean_text = question_text.replace("\n", " ").replace("\r", " ").strip()
         if not clean_text:
             return []
@@ -36,8 +34,7 @@ class BioPredictor:
         segmented_text = " ".join(jieba.lcut(clean_text))
         labels, probabilities = self.model.predict(
             segmented_text,
-            k=-1,
-            threshold=threshold,
+            k=1,
         )
 
         results = []
