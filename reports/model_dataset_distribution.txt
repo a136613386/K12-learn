@@ -1,0 +1,15 @@
+label_id=0: 100
+label_id=1: 100
+label_id=2: 100
+label_id=3: 100
+label_id=4: 100
+label_id=5: 100
+label_id=6: 100
+label_id=7: 100
+label_id=8: 100
+label_id=9: 100
+label_id=10: 100
+label_id=11: 100
+label_id=12: 100
+label_id=13: 100
+label_id=14: 100

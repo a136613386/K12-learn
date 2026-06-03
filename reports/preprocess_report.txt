@@ -1,0 +1,5 @@
+source=D:\xuweiqun\py_project\K12-learn\data\raw\model_dataset.csv
+rows=1500
+train=1200
+dev=150
+test=150
