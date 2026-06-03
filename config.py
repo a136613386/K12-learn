@@ -18,7 +18,7 @@ class Config:
     LR = 0.3
     EPOCH = 200
     WORD_NGRAMS = 2
-    LOSS_FUNC = "ova"
+    LOSS_FUNC = "softmax"
     DIM = 100
 
     DEFAULT_THRESHOLD = 0.2

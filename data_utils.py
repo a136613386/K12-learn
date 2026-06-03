@@ -24,7 +24,7 @@ def _build_label_map(df: pd.DataFrame) -> dict:
         df[["knowledge_points_id", "knowledge_points"]]
         .dropna()
         .drop_duplicates()
-        .sort_values("knowledge_points_id")
+        .sort_values(by="knowledge_points_id")
     )
 
     id_to_name = {}
@@ -47,9 +47,8 @@ def _build_fasttext_line(row: pd.Series) -> str:
     knowledge_id = int(row["knowledge_points_id"])
     question = _normalize_text(row.get("question", ""))
     option_text = _normalize_text(row.get("option", ""))
-    analysis = _normalize_text(row.get("analysis", ""))
 
-    text_parts = [part for part in [question, option_text, analysis] if part]
+    text_parts = [part for part in [question, option_text] if part]
     if not text_parts:
         raise ValueError(f"知识点 {knowledge_id} 存在空题目记录")
 

@@ -13,8 +13,7 @@ def calculate_f1(precision: float, recall: float) -> float:
 def print_metrics(model, dataset_path: str, dataset_name: str) -> None:
     sample_count, precision, recall = model.test(
         dataset_path,
-        k=-1,
-        threshold=Config.DEFAULT_THRESHOLD,
+        k=1,
     )
     f1 = calculate_f1(precision, recall)
 
