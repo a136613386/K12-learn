@@ -1,53 +1,22 @@
 {
-  "note": "当前为训练骨架报告，真实 BERT 训练接入后替换为 accuracy、macro F1 和 classification_report。",
-  "dev": {
-    "file": "D:\\xuweiqun\\py_project\\K12-learn\\data\\processed\\dev.txt",
-    "count": 3,
-    "accuracy": 1.0,
-    "details": [
-      {
-        "text": "孟德尔用豌豆杂交实验发现显隐性关系，并总结遗传定律。",
-        "label": 0,
-        "predicted_label": 0,
-        "confidence": 0.98
-      },
-      {
-        "text": "减数分裂和受精作用共同维持生物前后代染色体数目的稳定。",
-        "label": 1,
-        "predicted_label": 1,
-        "confidence": 0.9526
-      },
-      {
-        "text": "抗维生素D佝偻病属于伴性遗传分析中的常见案例。",
-        "label": 2,
-        "predicted_label": 2,
-        "confidence": 0.9526
-      }
-    ]
+  "training_args": {
+    "epochs": 10,
+    "batch_size": 32,
+    "max_length": 128,
+    "learning_rate": 0.0002,
+    "base_model_name": "bert-base-chinese"
   },
-  "test": {
-    "file": "D:\\xuweiqun\\py_project\\K12-learn\\data\\processed\\test.txt",
-    "count": 3,
-    "accuracy": 1.0,
-    "details": [
-      {
-        "text": "肺炎链球菌转化实验和噬菌体侵染细菌实验都与遗传物质探索有关。",
-        "label": 3,
-        "predicted_label": 3,
-        "confidence": 0.98
-      },
-      {
-        "text": "DNA复制过程需要遵循碱基互补配对原则。",
-        "label": 4,
-        "predicted_label": 4,
-        "confidence": 0.98
-      },
-      {
-        "text": "翻译过程中mRNA上的密码子与氨基酸对应。",
-        "label": 5,
-        "predicted_label": 5,
-        "confidence": 0.98
-      }
-    ]
-  }
+  "train_count": 3573,
+  "dev_count": 447,
+  "test_count": 447,
+  "label_count": 15,
+  "best_dev_macro_f1": 0.01389445557782231,
+  "test_accuracy": 0.116331096196868,
+  "test_macro_f1": 0.01389445557782231,
+  "classification_report": "              precision    recall  f1-score   support\n\n     孟德尔遗传定律       0.12      1.00      0.21        52\n   减数分裂与受精作用       0.00      0.00      0.00        37\n        伴性遗传       0.00      0.00      0.00        33\n  DNA是主要遗传物质       0.00      0.00      0.00        26\n    DNA结构与复制       0.00      0.00      0.00        36\n   基因指导蛋白质合成       0.00      0.00      0.00        34\n   基因表达与性状关系       0.00      0.00      0.00        24\n   基因突变和基因重组       0.00      0.00      0.00        32\n       染色体变异       0.00      0.00      0.00        27\n       人类遗传病       0.00      0.00      0.00        21\n     基因在染色体上       0.00      0.00      0.00        22\n    现代生物进化理论       0.00      0.00      0.00        36\n    生物共同祖先证据       0.00      0.00      0.00        23\n  协同进化与生物多样性       0.00      0.00      0.00        22\n   探究实践与模型实验       0.00      0.00      0.00        22\n\n    accuracy                           0.12       447\n   macro avg       0.01      0.07      0.01       447\nweighted avg       0.01      0.12      0.02       447\n",
+  "model_dir": "D:\\xuweiqun\\py_project\\K12-learn\\backend\\models\\knowledge_bert",
+  "bert_pretrained_path": "D:\\xuweiqun\\py_project\\K12-learn\\backend\\models\\bert-base-chinese",
+  "base_model_source": "D:\\xuweiqun\\py_project\\K12-learn\\backend\\models\\bert-base-chinese",
+  "base_model_cache_created": false,
+  "label_mapping_path": "D:\\xuweiqun\\py_project\\K12-learn\\backend\\models\\knowledge_bert\\label_mapping.json"
 }

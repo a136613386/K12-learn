@@ -16,7 +16,7 @@ class PredictionService:
 
     def predict(self, text: str) -> dict:
         text_hash = hashlib.sha256(text.encode("utf-8")).hexdigest()
-        cache_key = f"predict:knowledge_point:v1:{text_hash}"
+        cache_key = f"predict:knowledge_point:v2:{text_hash}"
         start = time.perf_counter()
 
         cached = get_json(cache_key)
@@ -41,6 +41,7 @@ class PredictionService:
             "difficulty": knowledge_point.get("difficulty"),
             "core_requirement": knowledge_point.get("core_requirement"),
         }
+        result.update(self._prediction_metadata(prediction))
 
         cache_value = {key: value for key, value in result.items() if key != "elapsed_ms"}
         set_json(cache_key, cache_value, self.settings.redis_ttl_seconds)
@@ -63,3 +64,11 @@ class PredictionService:
             elapsed_ms=elapsed_ms,
             cache_hit=cache_hit,
         )
+
+    def _prediction_metadata(self, prediction) -> dict:
+        metadata = prediction.to_dict()
+        return {
+            key: value
+            for key, value in metadata.items()
+            if key not in {"label_id", "confidence", "model_status"}
+        }

@@ -1,0 +1,49 @@
+{
+  "bert": {
+    "available": true,
+    "report_path": "D:\\xuweiqun\\py_project\\K12-learn\\reports\\evaluation_report.json",
+    "test_accuracy": 0.116331096196868,
+    "test_macro_f1": 0.01389445557782231,
+    "train_elapsed_seconds": null,
+    "avg_inference_ms": null,
+    "model_path": "D:\\xuweiqun\\py_project\\K12-learn\\backend\\models\\knowledge_bert",
+    "model_size_bytes": 409693336,
+    "training_args": {
+      "epochs": 10,
+      "batch_size": 32,
+      "max_length": 128,
+      "learning_rate": 0.0002,
+      "base_model_name": "bert-base-chinese"
+    },
+    "train_count": 3573,
+    "dev_count": 447,
+    "test_count": 447
+  },
+  "fasttext": {
+    "available": true,
+    "report_path": "D:\\xuweiqun\\py_project\\K12-learn\\reports\\fasttext_evaluation_report.json",
+    "test_accuracy": 0.810738255033557,
+    "test_macro_f1": 0.8165277577327344,
+    "train_elapsed_seconds": 5.0171,
+    "avg_inference_ms": 0.0528,
+    "model_path": "D:\\xuweiqun\\py_project\\K12-learn\\backend\\models\\fasttext_knowledge\\model.bin",
+    "model_size_bytes": 41618077,
+    "training_args": {
+      "epoch": 25,
+      "lr": 0.5,
+      "wordNgrams": 2,
+      "minCount": 1,
+      "dim": 100,
+      "bucket": 100000,
+      "loss": "softmax"
+    },
+    "train_count": 35730,
+    "dev_count": 4470,
+    "test_count": 4470
+  },
+  "recommendation": "FastText: macro F1 接近或优于 BERT，且推理和部署成本更低。",
+  "notes": [
+    "BERT 报告缺失或占位时，不参与指标比较。",
+    "FastText 指标来自 reports/fasttext_evaluation_report.json。"
+  ]
+}

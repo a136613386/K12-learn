@@ -113,6 +113,30 @@ backend/models/knowledge_bert/label_mapping.json
 reports/evaluation_report.json
 ```
 
+## FastText 训练与模型对比
+
+FastText 是轻量文本分类链路，使用当前 `data/processed/train.txt`、`dev.txt`、`test.txt` 和 `class.txt`，不会修改 BERT 训练入口。
+
+```powershell
+python backend\scripts\preprocess_fasttext_dataset.py
+python backend\scripts\train_fasttext.py --preprocess --epoch 25 --lr 0.5 --word-ngrams 2 --min-count 1 --dim 100
+python backend\scripts\compare_models.py
+```
+
+关键产物：
+
+```text
+data/fasttext/train.txt
+data/fasttext/dev.txt
+data/fasttext/test.txt
+backend/models/fasttext_knowledge/model.bin
+backend/models/fasttext_knowledge/label_mapping.json
+backend/models/fasttext_knowledge/tokenization_config.json
+reports/fasttext_preprocess_report.json
+reports/fasttext_evaluation_report.json
+reports/model_comparison_report.json
+```
+
 ## API
 
 错题归类与强化题推荐：

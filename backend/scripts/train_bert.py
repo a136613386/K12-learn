@@ -26,9 +26,9 @@ def load_dataset(path: Path) -> list[tuple[str, int]]:
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Train BERT knowledge-point classifier")
-    parser.add_argument("--epochs", type=int, default=1)
-    parser.add_argument("--batch-size", type=int, default=8)
-    parser.add_argument("--max-length", type=int, default=128)
+    parser.add_argument("--epochs", type=int, default=4)
+    parser.add_argument("--batch-size", type=int, default=16)
+    parser.add_argument("--max-length", type=int, default=256)
     parser.add_argument("--learning-rate", type=float, default=2e-5)
     parser.add_argument("--base-model-name", default=DEFAULT_BASE_MODEL_NAME)
     parser.add_argument("--dry-run", action="store_true", help="Validate data and config without training")

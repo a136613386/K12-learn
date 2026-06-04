@@ -1,0 +1,69 @@
+{
+  "training_args": {
+    "epoch": 25,
+    "lr": 0.5,
+    "wordNgrams": 2,
+    "minCount": 1,
+    "dim": 100,
+    "bucket": 100000,
+    "loss": "softmax"
+  },
+  "train_count": 35730,
+  "dev_count": 4470,
+  "test_count": 4470,
+  "label_count": 15,
+  "dev_accuracy": 0.8293064876957494,
+  "dev_macro_f1": 0.827925575068648,
+  "test_accuracy": 0.810738255033557,
+  "test_macro_f1": 0.8165277577327344,
+  "classification_report": "              precision    recall  f1-score   support\n\n     孟德尔遗传定律       0.72      0.81      0.76       520\n   减数分裂与受精作用       0.76      0.59      0.67       370\n        伴性遗传       0.83      0.76      0.79       330\n  DNA是主要遗传物质       0.96      0.90      0.93       260\n    DNA结构与复制       0.81      0.88      0.84       360\n   基因指导蛋白质合成       0.76      0.82      0.79       340\n   基因表达与性状关系       0.80      0.70      0.75       240\n   基因突变和基因重组       0.78      0.69      0.73       320\n       染色体变异       0.81      0.96      0.88       270\n       人类遗传病       0.80      0.94      0.87       210\n     基因在染色体上       0.82      0.82      0.82       220\n    现代生物进化理论       0.89      0.86      0.87       360\n    生物共同祖先证据       0.95      0.91      0.93       230\n  协同进化与生物多样性       0.86      0.95      0.91       220\n   探究实践与模型实验       0.75      0.69      0.72       220\n\n    accuracy                           0.81      4470\n   macro avg       0.82      0.82      0.82      4470\nweighted avg       0.81      0.81      0.81      4470\n",
+  "dev_prediction_distribution": {
+    "0": 560,
+    "1": 382,
+    "2": 330,
+    "3": 284,
+    "4": 369,
+    "5": 320,
+    "6": 243,
+    "7": 330,
+    "8": 222,
+    "9": 216,
+    "10": 191,
+    "11": 343,
+    "12": 271,
+    "13": 229,
+    "14": 180
+  },
+  "test_prediction_distribution": {
+    "0": 583,
+    "1": 291,
+    "2": 300,
+    "3": 244,
+    "4": 391,
+    "5": 369,
+    "6": 209,
+    "7": 283,
+    "8": 320,
+    "9": 245,
+    "10": 220,
+    "11": 350,
+    "12": 220,
+    "13": 244,
+    "14": 201
+  },
+  "model_path": "D:\\xuweiqun\\py_project\\K12-learn\\backend\\models\\fasttext_knowledge\\model.bin",
+  "model_size_bytes": 41618077,
+  "label_mapping_path": "D:\\xuweiqun\\py_project\\K12-learn\\backend\\models\\fasttext_knowledge\\label_mapping.json",
+  "tokenization": {
+    "mode": "char_with_ascii_chunks",
+    "description": "中文按字符切分，连续英文/数字/遗传符号保留为 token",
+    "preprocess_report": "D:\\xuweiqun\\py_project\\K12-learn\\reports\\fasttext_preprocess_report.json"
+  },
+  "data_paths": {
+    "train": "D:\\xuweiqun\\py_project\\K12-learn\\data\\fasttext\\train.txt",
+    "dev": "D:\\xuweiqun\\py_project\\K12-learn\\data\\fasttext\\dev.txt",
+    "test": "D:\\xuweiqun\\py_project\\K12-learn\\data\\fasttext\\test.txt"
+  },
+  "train_elapsed_seconds": 5.0171,
+  "avg_inference_ms": 0.0528
+}

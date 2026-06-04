@@ -34,12 +34,12 @@
         <div v-if="classification" class="panel result-panel">
           <div class="panel-header">
             <h2>{{ classification.knowledge_point_name }}</h2>
-            <span class="badge">{{ result.cache_hit ? '\u7f13\u5b58\u547d\u4e2d' : '\u6a21\u578b\u5f52\u7c7b' }}</span>
+            <span class="badge">{{ result.cache_hit ? '\u7f13\u5b58\u547d\u4e2d' : modelStatusText(classification.model_status) }}</span>
           </div>
           <div class="metric-grid">
             <div>
-              <span>&#x7F6E;&#x4FE1;&#x5EA6;</span>
-              <strong>{{ percent(classification.confidence) }}</strong>
+              <span>{{ confidenceLabel(classification) }}</span>
+              <strong>{{ percent(displayConfidence(classification)) }}</strong>
             </div>
             <div>
               <span>&#x8017;&#x65F6;</span>
@@ -54,6 +54,15 @@
               <strong>{{ stars(classification.difficulty) }}</strong>
             </div>
           </div>
+          <p class="model-meta">
+            <strong>推理模型：</strong>
+            <span>{{ modelStatusText(classification.model_status) }}</span>
+            <span v-if="classification.bert_confidence !== undefined">BERT {{ percent(classification.bert_confidence) }}</span>
+            <span v-if="classification.fasttext_confidence !== undefined">FastText {{ percent(classification.fasttext_confidence) }}</span>
+          </p>
+          <p v-if="classification.fallback_used || classification.fallback_reason" class="hint">
+            {{ fallbackReasonText(classification.fallback_reason) }}
+          </p>
           <p class="requirement">{{ classification.core_requirement }}</p>
           <p v-if="Number(classification.confidence || 0) < 0.6" class="hint">
             &#x5F53;&#x524D;&#x5F52;&#x7C7B;&#x7F6E;&#x4FE1;&#x5EA6;&#x8F83;&#x4F4E;&#xFF0C;&#x5EFA;&#x8BAE;&#x7ED3;&#x5408;&#x9898;&#x5E72;&#x5173;&#x952E;&#x8BCD;&#x4EBA;&#x5DE5;&#x786E;&#x8BA4;&#x3002;
@@ -119,7 +128,10 @@
         <div class="panel">
           <h2>&#x670D;&#x52A1;&#x72B6;&#x6001;</h2>
           <div class="health-list">
-            <span :class="{ ok: health.model_loaded }">&#x6A21;&#x578B; {{ health.model_loaded ? '\u5df2\u52a0\u8f7d' : '\u5360\u4f4d\u63a8\u7406' }}</span>
+            <span :class="{ ok: health.bert_loaded }">BERT {{ health.bert_loaded ? '\u5df2\u52a0\u8f7d' : '\u4e0d\u53ef\u7528' }}</span>
+            <span :class="{ ok: health.fasttext_loaded }">FastText {{ health.fasttext_loaded ? '\u5df2\u52a0\u8f7d' : '\u4e0d\u53ef\u7528' }}</span>
+            <span :class="{ ok: health.model_loaded }">&#x5F53;&#x524D;&#x6A21;&#x578B; {{ modelStatusText(health.model_status) }}</span>
+            <span>&#x515C;&#x5E95;&#x9608;&#x503C; {{ percent(health.bert_confidence_threshold || 0.8) }}</span>
             <span :class="{ ok: health.mysql_connected }">MySQL {{ health.mysql_connected ? '\u5df2\u8fde\u63a5' : '\u672a\u8fde\u63a5' }}</span>
             <span :class="{ ok: health.redis_connected }">Redis {{ health.redis_connected ? '\u5df2\u8fde\u63a5' : '\u672a\u8fde\u63a5' }}</span>
           </div>
@@ -159,6 +171,10 @@ const stats = reactive({})
 const health = reactive({
   status: 'degraded',
   model_loaded: false,
+  model_status: 'keyword_fallback',
+  bert_loaded: false,
+  fasttext_loaded: false,
+  bert_confidence_threshold: 0.8,
   mysql_connected: false,
   redis_connected: false
 })
@@ -173,6 +189,53 @@ function stars(value) {
 
 function percent(value) {
   return `${Math.round(Number(value || 0) * 100)}%`
+}
+
+function displayConfidence(item) {
+  if (!item) {
+    return 0
+  }
+  if (item.model_status === 'fasttext_fallback' || item.model_status === 'fasttext') {
+    return item.fasttext_confidence ?? item.confidence
+  }
+  if (item.model_status === 'bert' || item.model_status === 'bert_low_confidence_no_fasttext') {
+    return item.bert_confidence ?? item.confidence
+  }
+  return item.confidence
+}
+
+function confidenceLabel(item) {
+  if (!item) {
+    return '置信度'
+  }
+  if (item.model_status === 'fasttext_fallback' || item.model_status === 'fasttext') {
+    return 'FastText置信度'
+  }
+  if (item.model_status === 'bert' || item.model_status === 'bert_low_confidence_no_fasttext') {
+    return 'BERT置信度'
+  }
+  return '置信度'
+}
+
+function modelStatusText(status) {
+  const statusMap = {
+    bert: 'BERT\u6a21\u578b',
+    fasttext: 'FastText\u6a21\u578b',
+    fasttext_fallback: 'FastText\u515c\u5e95',
+    keyword_fallback: '\u5173\u952e\u8bcd\u515c\u5e95',
+    bert_low_confidence_no_fasttext: 'BERT\u4f4e\u7f6e\u4fe1\u5ea6'
+  }
+  return statusMap[status] || '\u672a\u77e5\u6a21\u578b'
+}
+
+function fallbackReasonText(reason) {
+  const reasonMap = {
+    bert_unavailable: 'BERT\u6a21\u578b\u4e0d\u53ef\u7528\uff0c\u5df2\u542f\u7528 FastText \u515c\u5e95\u5206\u7c7b\u3002',
+    bert_confidence_below_threshold: 'BERT\u7f6e\u4fe1\u5ea6\u4f4e\u4e8e 80%\uff0c\u5df2\u542f\u7528 FastText \u515c\u5e95\u5206\u7c7b\u3002',
+    bert_and_fasttext_unavailable: 'BERT \u548c FastText \u90fd\u4e0d\u53ef\u7528\uff0c\u5df2\u4f7f\u7528\u5173\u952e\u8bcd\u515c\u5e95\u5206\u7c7b\u3002',
+    fasttext_unavailable: 'BERT\u7f6e\u4fe1\u5ea6\u4f4e\uff0c\u4f46 FastText \u4e0d\u53ef\u7528\uff0c\u6682\u65f6\u4fdd\u7559 BERT \u7ed3\u679c\u3002'
+  }
+  return reasonMap[reason] || '\u5df2\u542f\u7528\u515c\u5e95\u5206\u7c7b\u3002'
 }
 
 function clearText() {

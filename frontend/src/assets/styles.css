@@ -190,6 +190,17 @@ textarea {
   padding: 10px 12px;
 }
 
+.model-meta {
+  align-items: center;
+  color: #526b84;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 14px;
+  gap: 8px 14px;
+  line-height: 1.6;
+  margin: 12px 0 0;
+}
+
 .hint {
   background: #fff8e5;
   border: 1px solid #f6d36b;

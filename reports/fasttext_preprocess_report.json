@@ -1,0 +1,103 @@
+{
+  "tokenization": {
+    "mode": "char_with_ascii_chunks",
+    "description": "中文按字符切分，连续英文/数字/遗传符号保留为 token"
+  },
+  "class_file": {
+    "path": "D:\\xuweiqun\\py_project\\K12-learn\\data\\processed\\class.txt",
+    "count": 15,
+    "labels": [
+      "孟德尔遗传定律",
+      "减数分裂与受精作用",
+      "伴性遗传",
+      "DNA是主要遗传物质",
+      "DNA结构与复制",
+      "基因指导蛋白质合成",
+      "基因表达与性状关系",
+      "基因突变和基因重组",
+      "染色体变异",
+      "人类遗传病",
+      "基因在染色体上",
+      "现代生物进化理论",
+      "生物共同祖先证据",
+      "协同进化与生物多样性",
+      "探究实践与模型实验"
+    ],
+    "unchanged": true
+  },
+  "splits": {
+    "train": {
+      "input_path": "D:\\xuweiqun\\py_project\\K12-learn\\data\\processed\\train.txt",
+      "output_path": "D:\\xuweiqun\\py_project\\K12-learn\\data\\fasttext\\train.txt",
+      "count": 35730,
+      "distribution": {
+        "0": 4210,
+        "1": 2950,
+        "2": 2620,
+        "3": 2120,
+        "4": 2880,
+        "5": 2730,
+        "6": 1870,
+        "7": 2570,
+        "8": 2160,
+        "9": 1680,
+        "10": 1710,
+        "11": 2880,
+        "12": 1880,
+        "13": 1740,
+        "14": 1730
+      },
+      "avg_tokens": 96.64,
+      "max_tokens": 1082
+    },
+    "dev": {
+      "input_path": "D:\\xuweiqun\\py_project\\K12-learn\\data\\processed\\dev.txt",
+      "output_path": "D:\\xuweiqun\\py_project\\K12-learn\\data\\fasttext\\dev.txt",
+      "count": 4470,
+      "distribution": {
+        "0": 520,
+        "1": 370,
+        "2": 330,
+        "3": 260,
+        "4": 360,
+        "5": 340,
+        "6": 240,
+        "7": 320,
+        "8": 270,
+        "9": 210,
+        "10": 220,
+        "11": 360,
+        "12": 230,
+        "13": 220,
+        "14": 220
+      },
+      "avg_tokens": 101.12,
+      "max_tokens": 1126
+    },
+    "test": {
+      "input_path": "D:\\xuweiqun\\py_project\\K12-learn\\data\\processed\\test.txt",
+      "output_path": "D:\\xuweiqun\\py_project\\K12-learn\\data\\fasttext\\test.txt",
+      "count": 4470,
+      "distribution": {
+        "0": 520,
+        "1": 370,
+        "2": 330,
+        "3": 260,
+        "4": 360,
+        "5": 340,
+        "6": 240,
+        "7": 320,
+        "8": 270,
+        "9": 210,
+        "10": 220,
+        "11": 360,
+        "12": 230,
+        "13": 220,
+        "14": 220
+      },
+      "avg_tokens": 92.73,
+      "max_tokens": 715
+    }
+  },
+  "filtered": {}
+}

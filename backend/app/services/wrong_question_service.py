@@ -18,7 +18,7 @@ class WrongQuestionService:
 
     def classify_and_recommend(self, text: str, limit: int = 5) -> dict:
         text_hash = hashlib.sha256(text.encode("utf-8")).hexdigest()
-        cache_key = f"wrong_question:classify_recommend:v2:{text_hash}:{limit}"
+        cache_key = f"wrong_question:classify_recommend:v3:{text_hash}:{limit}"
         start = time.perf_counter()
 
         cached = get_json(cache_key)
@@ -42,6 +42,7 @@ class WrongQuestionService:
                 "importance": knowledge_point.get("importance"),
                 "difficulty": knowledge_point.get("difficulty"),
                 "core_requirement": knowledge_point.get("core_requirement"),
+                **self._prediction_metadata(prediction),
             },
             "recommended_questions": [self._serialize_question(item) for item in questions],
             "recommendation_count": len(questions),
@@ -85,3 +86,11 @@ class WrongQuestionService:
             elapsed_ms=float(result.get("elapsed_ms") or 0),
             cache_hit=bool(result.get("cache_hit")),
         )
+
+    def _prediction_metadata(self, prediction) -> dict:
+        metadata = prediction.to_dict()
+        return {
+            key: value
+            for key, value in metadata.items()
+            if key not in {"label_id", "confidence", "model_status"}
+        }

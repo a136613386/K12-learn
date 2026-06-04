@@ -35,6 +35,13 @@ def _int_env(name: str, default: int) -> int:
     return int(value)
 
 
+def _float_env(name: str, default: float) -> float:
+    value = os.getenv(name)
+    if not value:
+        return default
+    return float(value)
+
+
 def _bert_pretrained_path() -> Path:
     configured = os.getenv("BERT_PRETRAINED_PATH")
     if configured:
@@ -63,6 +70,8 @@ class Settings:
     redis_db: int
     redis_ttl_seconds: int
     model_path: Path
+    fasttext_model_path: Path
+    bert_confidence_threshold: float
     bert_pretrained_path: Path
     class_path: Path
     data_dir: Path
@@ -94,6 +103,8 @@ def get_settings() -> Settings:
         redis_db=_int_env("REDIS_DB", 0),
         redis_ttl_seconds=_int_env("REDIS_TTL_SECONDS", 86400),
         model_path=PROJECT_DIR / os.getenv("MODEL_PATH", "backend/models/knowledge_bert"),
+        fasttext_model_path=PROJECT_DIR / os.getenv("FASTTEXT_MODEL_PATH", "backend/models/fasttext_knowledge"),
+        bert_confidence_threshold=_float_env("BERT_CONFIDENCE_THRESHOLD", 0.8),
         bert_pretrained_path=_bert_pretrained_path(),
         class_path=PROJECT_DIR / os.getenv("CLASS_PATH", "data/processed/class.txt"),
         data_dir=PROJECT_DIR / os.getenv("DATA_DIR", "data/processed"),
