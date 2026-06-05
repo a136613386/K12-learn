@@ -13,7 +13,7 @@
 
     <section class="layout">
       <div class="workspace">
-        <div class="panel">
+        <div class="panel input-panel">
           <div class="panel-header">
             <h2>&#x9519;&#x9898;&#x8F93;&#x5165;</h2>
             <button class="ghost" type="button" @click="clearText">&#x6E05;&#x7A7A;</button>
@@ -37,25 +37,25 @@
             <span class="badge">{{ result.cache_hit ? '\u7f13\u5b58\u547d\u4e2d' : modelStatusText(classification.model_status) }}</span>
           </div>
           <div class="metric-grid">
-            <div>
+            <div class="metric-card primary-metric">
               <span>{{ confidenceLabel(classification) }}</span>
               <strong>{{ percent(displayConfidence(classification)) }}</strong>
             </div>
-            <div>
+            <div class="metric-card">
               <span>&#x8017;&#x65F6;</span>
               <strong>{{ result.elapsed_ms }} ms</strong>
             </div>
-            <div>
+            <div class="metric-card">
               <span>&#x91CD;&#x8981;&#x7A0B;&#x5EA6;</span>
               <strong>{{ stars(classification.importance) }}</strong>
             </div>
-            <div>
+            <div class="metric-card">
               <span>&#x96BE;&#x5EA6;</span>
               <strong>{{ stars(classification.difficulty) }}</strong>
             </div>
           </div>
           <p class="model-meta">
-            <strong>推理模型：</strong>
+            <strong>&#x63A8;&#x7406;&#x6A21;&#x578B;&#xFF1A;</strong>
             <span>{{ modelStatusText(classification.model_status) }}</span>
             <span v-if="classification.bert_confidence !== undefined">BERT {{ percent(classification.bert_confidence) }}</span>
             <span v-if="classification.fasttext_confidence !== undefined">FastText {{ percent(classification.fasttext_confidence) }}</span>
@@ -69,7 +69,7 @@
           </p>
         </div>
 
-        <div v-if="result" class="panel">
+        <div v-if="result" class="panel practice-panel">
           <div class="panel-header">
             <h2>&#x540C;&#x7C7B;&#x5F3A;&#x5316;&#x9898;</h2>
             <span class="badge muted">{{ result.recommendation_count }} / 5</span>
@@ -95,7 +95,7 @@
           <p v-else class="empty">&#x5F53;&#x524D;&#x77E5;&#x8BC6;&#x70B9;&#x6682;&#x65E0;&#x540C;&#x7C7B;&#x5F3A;&#x5316;&#x9898;&#x3002;</p>
         </div>
 
-        <div class="panel">
+        <div class="panel recent-panel">
           <div class="panel-header">
             <h2>&#x6700;&#x8FD1;&#x9519;&#x9898;&#x5F52;&#x7C7B;</h2>
             <button class="ghost" type="button" @click="loadRecent">&#x5237;&#x65B0;</button>
@@ -115,7 +115,7 @@
       </div>
 
       <aside class="sidebar">
-        <div class="panel">
+        <div class="panel overview-panel">
           <h2>&#x6982;&#x89C8;</h2>
           <div class="stat-list">
             <div><span>&#x77E5;&#x8BC6;&#x70B9;</span><strong>{{ stats.knowledge_point_count ?? 0 }}</strong></div>
@@ -125,7 +125,7 @@
           </div>
         </div>
 
-        <div class="panel">
+        <div class="panel health-panel">
           <h2>&#x670D;&#x52A1;&#x72B6;&#x6001;</h2>
           <div class="health-list">
             <span :class="{ ok: health.bert_loaded }">BERT {{ health.bert_loaded ? '\u5df2\u52a0\u8f7d' : '\u4e0d\u53ef\u7528' }}</span>
@@ -137,7 +137,7 @@
           </div>
         </div>
 
-        <div class="panel">
+        <div class="panel knowledge-panel">
           <h2>&#x77E5;&#x8BC6;&#x70B9;&#x5217;&#x8868;</h2>
           <ul class="knowledge-list">
             <li v-for="item in knowledgePoints" :key="item.id">
@@ -206,15 +206,15 @@ function displayConfidence(item) {
 
 function confidenceLabel(item) {
   if (!item) {
-    return '置信度'
+    return '\u7f6e\u4fe1\u5ea6'
   }
   if (item.model_status === 'fasttext_fallback' || item.model_status === 'fasttext') {
-    return 'FastText置信度'
+    return 'FastText\u7f6e\u4fe1\u5ea6'
   }
   if (item.model_status === 'bert' || item.model_status === 'bert_low_confidence_no_fasttext') {
-    return 'BERT置信度'
+    return 'BERT\u7f6e\u4fe1\u5ea6'
   }
-  return '置信度'
+  return '\u7f6e\u4fe1\u5ea6'
 }
 
 function modelStatusText(status) {
